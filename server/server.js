@@ -5,9 +5,13 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 
-const { getAllProducts }  = require("./handlers/getAllProducts")
-const { getProductById } = require ("./handlers/getProductById")
-const { putById } = require ("./handlers/putById")
+// handlers
+const { getAll } = require("./handlers/getAll")
+const { getUserById } = require ("./handlers/getUserById")
+const { postNew } = require ("./handlers/postNew")
+
+
+
 
 const port = 4444;
 
@@ -27,30 +31,24 @@ express()
     // Nothing to modify above or below this line
     // --------------------------------
 
+    .get("/test", (req,res) => {
+        res.status(200).json({
+            status: 200,
+            body: "it worked"
+        })
+    })
+
     
 //-----------------------------------------------------GETs---------------------------
 
+    .get("/getAll", getAll)
 
-    .get("/test", (req,res) => {
-        res
-            .status(200)
-            .json({
-                message: "it worked;",
-                status: 200
-            })
-    })
+    .get("/:id", getUserById)
 
-    // get GET, POST, PUT, DELETE, etc.
+//-----------------------------------------------------POSTs---------------------------
 
-        // get all
-    .get ("/getAllProducts", getAllProducts)
-
-        // get one based on id
-    .get("/:id", getProductById)
-
-    .put("/edit/:id", putById)
-
-
+    .post("/add", postNew)
+    
 
     // ---------------------------------
     // Nothing to modify above or below this line
